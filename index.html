@@ -3,46 +3,54 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>currency converter</title>
     <style>
       body {
         font-family: "Times New Roman";
-        background-image: url("https://st2.depositphotos.com/1000423/8611/i/450/depositphotos_86118142-stock-photo-global-interaction.jpg");
-        background-size: cover;
+        background-color: red;
         display: flex;
         justify-content: center;
         align-items: center;
         height: 100vh;
 
         .box {
-          background-color: rgb(255, 255, 255, 0.85);
+          background-color: rgba(193, 173, 194, 0.3);
           padding: 20px 30px;
           border-radius: 8px;
-          box-shadow: 0 0 15px 1px black;
-          width: 350px;
+          box-shadow: 0 0 15px 1px white;
+          width: 300px;
+          &:hover {
+            transform: translateY(-8px);
+          }
         }
 
         & h1 {
           text-align: center;
-          color: blue;
-          font-size: 40px;
+          color: white;
+          font-size: 30px;
         }
 
         & label {
           font-weight: bold;
           margin: 20px 0px;
+          color: white;
         }
 
         & button {
-          background-color: blue;
+          background-color: cornflowerblue;
           color: white;
           font-weight: bold;
-          border: none;
           &:hover {
-            background-color: cornflowerblue;
+            background-color: rgb(13, 168, 168);
             color: white;
+            transition: background-color 0.3s ease-in-out;
           }
         }
+      }
+      select:focus,
+      input:focus {
+        border-color: gold;
+        outline: none;
       }
 
       select,
@@ -51,27 +59,40 @@
         width: 100%;
         padding: 10px;
         margin: 5px 0px;
-        border: 1px solid lightgray;
         border-radius: 5px;
         font-size: 17px;
-        background-color: rgb(255, 255, 255, 0.8);
+        border: 2px solid white;
+        color: white;
+        background-color: red;
       }
       input {
-        width: 94%;
+        width: 92%;
         font-size: 15px;
+        color: white;
+      }
+      option {
+        background-color: #fff;
+        color: red;
       }
 
       #result {
         text-align: center;
         font-size: 20px;
-        border: 1px solid lightgrey;
-        color: red;
+        border: 2px solid white;
+        color: white;
+      }
+      button:active {
+        transform: translateY(2px);
       }
     </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+    />
   </head>
   <body>
     <div class="box">
-      <h1>Currency Converter</h1>
+      <h1>Currency <i class="fa-solid fa-arrows-rotate"></i> Converter</h1>
       <label for="fromcountry">From:</label>
       <select name="fromcountry" id="fromcountry"></select>
       <br />
@@ -140,11 +161,18 @@
           if (fromcountry && tocountry) {
             let { eur } = currencyInfo;
             let convertedamount = eur[tocountry] / eur[fromcountry];
-            result.value =
-              (amounttoconvert * convertedamount).toFixed(2) +
-              " " +
-              `${tocountry}`;
-            if (result.value == (0).toFixed(2) + " " + `${tocountry}`) {
+            if ((fromcountry == "1000sats" || tocountry == "1000sats") && amounttoconvert) {
+              alert("Select the valid options..");
+              result.value = " ";
+              location.reload();
+            } else if (amounttoconvert) {
+              result.value =
+                (amounttoconvert * convertedamount).toFixed(2) +
+                " " +
+                `${tocountry}`;
+              console.log(fromcountry);
+              console.log(tocountry);
+            } else {
               result.value = " ";
               alert("Select the valid options..");
             }
